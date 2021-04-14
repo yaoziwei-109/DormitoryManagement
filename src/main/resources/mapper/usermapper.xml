@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.usermapper">
+
+    <select id="getuser" resultType="com.example.demo.bean.User">
+        SELECT * FROM mydb WHERE id = #{id}
+    </select>
+
+    <update id="createTableForUser" parameterType="String" >
+        CREATE TABLE ${username}
+        (
+        id int NOT NULL AUTO_INCREMENT,
+        name varchar(255)  NOT NULL,
+        dormitory varchar(255)  NOT NULL,
+        clas varchar(255)  NOT NULL,
+        number varchar(255)  NOT NULL,
+        teacher_phone varchar(255)  NOT NULL,
+        parent_phone varchar(255)  NOT NULL,
+        PRIMARY KEY (id)
+        )
+    </update>
+
+</mapper>
