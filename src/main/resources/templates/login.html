@@ -41,7 +41,7 @@
           <div class="row">
 
             <!-- Nested Row within Card Body -->
-            <img src="/aa.jpg" class="aligncenter">
+            <img src="ss.jpg" class="aligncenter">
             </img>
               <div class="col-lg-6">
 
@@ -51,16 +51,16 @@
                   </div>
                   <form  action="/user/login" method="post" class="user">
                     <div class="form-group">
-                      <input  name="username" type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input  id="username" name="username" type="text" class="form-control form-control-user"  aria-describedby="emailHelp" placeholder="Enter Email Address...">
                     </div>
                     <div class="form-group">
-                      <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input id="password" name="password" type="password" class="form-control form-control-user" placeholder="Password">
                     </div>
                     <p style="color : red" th:text="${msg}"></p>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                        <input id="checkbox" type="checkbox" class="custom-control-input" >
+                        <label class="custom-control-label" for="checkbox">Remember Me</label>
                       </div>
                       </div>
 
@@ -98,7 +98,35 @@
 
   <!-- Custom scripts for all pages-->
   <script src="/js/sb-admin-2.min.js"></script>
+  <script src="/ssi.js"></script>
+  <script  th:inline="javascript">
 
+
+ $(document).ready(function(){
+    if( $.session.get('key')==1){
+       $("#checkbox").prop('checked', true);
+        $.get({
+        url : "./user/getUser",
+        success :function(result,status){
+              console.log(status);
+               $("#username").val(result.name);
+               $("#password").val(result.password);
+              }
+
+         });
+    }
+    $("#checkbox").click(function () {
+
+       if( $('#checkbox').prop('checked')){
+        $.session.set('key', 1);
+        alert("选中");
+         }else{
+         $.session.set('key', 0);
+         }
+
+      });
+});
+   </script>
 </body>
 
 </html>

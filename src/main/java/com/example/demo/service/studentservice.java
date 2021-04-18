@@ -21,10 +21,8 @@ public class studentservice {
     public int addstudent(String username,Student student){
         try {
             String tableName = tool.getTableNameFromUsername(username);
-            if(studentmapper.getStudentbyname(tableName,student.getName())!=null){
-                return -2;  //通过姓名可以查到学生，表中已经有学生
-            }else if(studentmapper.getStudentbynumber(tableName,student.getNumber())!=null){
-                return -3;  //通过学号可以查到学生，表中已经有学生
+            if(studentmapper.getStudentbynumber(tableName,student.getNumber())!=null){
+                return -2;  //通过学号可以查到学生，表中已经有学生
             }
            return studentmapper.addstudent(tableName,student.getName(),student.getDormitory(),student.getClas(),
                                      student.getNumber(),student.getTeacher_phone(),student.getParent_phone());
@@ -37,21 +35,17 @@ public class studentservice {
     public int updatestudent(String username,Student student){
         try {
             String tableName = tool.getTableNameFromUsername(username);
-            if(studentmapper.getStudentbyname(tableName,student.getName())!=null){
-                if(studentmapper.getStudentbynumber(tableName,student.getNumber())!=null){
-                    return  -3; //学号已经被注册
-                }else {
-                    return studentmapper.updateStudent(tableName,student.getName(),student.getDormitory(),student.getClas(),
-                            student.getNumber(),student.getTeacher_phone(),student.getParent_phone());
-                }
-            }else {
-                return -2;  //查无学生
-            }
 
+            if(studentmapper.getStudentbynumber(tableName,student.getNumber())==null) {
+                return  -2; //查无学生
+            }
+            return studentmapper.updateStudent(tableName,student.getName(),student.getDormitory(),student.getClas(),
+                    student.getNumber(),student.getTeacher_phone(),student.getParent_phone());
         }catch (Exception e){
             return -1;
         }
     }
+
     public int deletestudent(String username,Student student){
         try {
             String tableName = tool.getTableNameFromUsername(username);
@@ -89,5 +83,13 @@ public class studentservice {
 
     public  int countall(String username){
         return studentmapper.countAll(tool.getTableNameFromUsername(username));
+    }
+
+    public  int countallclass(String username){
+        return studentmapper.countAllClass(tool.getTableNameFromUsername(username));
+    }
+
+    public  int countAllDormitory(String username){
+        return studentmapper.countAllDormitory(tool.getTableNameFromUsername(username));
     }
 }

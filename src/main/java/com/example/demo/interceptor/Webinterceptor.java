@@ -16,7 +16,6 @@ public class Webinterceptor implements HandlerInterceptor {
         }else {
             request.getSession().setAttribute("msg","未登录");
             response.sendRedirect("/login");
-
             return false;
         }
 

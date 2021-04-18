@@ -1,11 +1,12 @@
 package com.example.demo.Controller;
 
+import com.example.demo.bean.Student;
+import com.example.demo.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,8 @@ public class LoginController {
         if(userservice.getUserByName(username)!=null
                 && userservice.getUserByName(username).getPassword().equals(password)){
             session.setAttribute("username",username);
+            session.setAttribute("cusername",username);
+            session.setAttribute("cpassword",password);
             return "redirect:/main";
         }
         else {
@@ -42,24 +45,28 @@ public class LoginController {
             return "redirect:/main";
         }else {
             //第一次访问时 清理缓存
-            Enumeration em = session.getAttributeNames();
-            while(em.hasMoreElements()){
-                session.removeAttribute(em.nextElement().toString());
-            }
+            session.removeAttribute("username");
             return "login";
         }
     }
 
     @GetMapping(value={"/login"})
     public  String login2(Model model, HttpServletRequest request, HttpSession session){
+        session.removeAttribute("username");
         if(session.getAttribute("msg")!=null){
             model.addAttribute("msg",request.getSession().getAttribute("msg"));
-        }
-        Enumeration em = session.getAttributeNames();
-        while(em.hasMoreElements()){
-            session.removeAttribute(em.nextElement().toString());
+            session.removeAttribute("msg");
         }
         return "login";
     }
 
+     @GetMapping("/user/getUser")
+     @ResponseBody
+    public User getuser( HttpSession session){
+        String username= (String) session.getAttribute("cusername");
+        String password= (String) session.getAttribute("cpassword");
+        User u = new User(username,password);
+         System.out.println("进入"+u);
+        return u ;
+     }
 }

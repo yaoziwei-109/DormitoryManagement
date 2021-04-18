@@ -9,7 +9,6 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @Data
-@ToString
 public class User {
 
     private Integer id;

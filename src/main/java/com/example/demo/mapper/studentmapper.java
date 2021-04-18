@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface studentmapper {
 
-    @Insert("INSERT INTO ${username}(id,name,dormitory,clas,number,teacher_phone,parent_phone)"
+    @Insert("INSERT INTO ${username}" +"(id,name,dormitory,clas,number,teacher_phone,parent_phone)"
             + "  VALUES (null,#{name},#{dormitory},#{clas},#{number},#{teacher_phone},#{parent_phone})")
     int addstudent(@Param("username") String username, String name, String dormitory, String clas,
                    String number, String teacher_phone, String parent_phone);
@@ -21,8 +21,8 @@ public interface studentmapper {
 
 
     @Update("UPDATE ${username} SET dormitory=#{dormitory},clas=#{clas}," +
-            "number=#{number},teacher_phone=#{teacher_phone},parent_phone=#{parent_phone} " +
-            "WHERE name=#{name}" )
+            "name=#{name},teacher_phone=#{teacher_phone},parent_phone=#{parent_phone} " +
+            "WHERE number=#{number}" )
     int updateStudent(@Param("username") String username, String name,String dormitory, String clas,
                       String number, String teacher_phone, String parent_phone);
 
@@ -35,4 +35,9 @@ public interface studentmapper {
     @Delete("Delete  FROM ${username} WHERE  number=#{number}")
     int deletestudent(@Param("username") String username,String number);
 
+    @Select("SELECT COUNT(DISTINCT clas) FROM ${username}")
+    int countAllClass(@Param("username") String username);
+
+    @Select("SELECT COUNT(DISTINCT dormitory) FROM ${username}")
+    int countAllDormitory(@Param("username") String username);
 }

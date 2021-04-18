@@ -32,24 +32,24 @@
           <div class="row">
 
             <div class="col-lg-5 p-5 card m-4 border-left-info" >
-              <form  class="user">
+              <form  class="user " >
                 <div class="form-group">
-                  <input id="name" name="name" type="text" class="form-control "  placeholder="姓名">
+                  <input style="color : black"  id="name" name="name" type="text" class="form-control  "  placeholder="姓名">
                 </div>
                 <div class="form-group">
-                  <input id="dormitory"  name="dormitory" type="text" class="form-control "  placeholder="宿舍">
+                  <input style="color : black" id="dormitory"  name="dormitory" type="text" class="form-control "  placeholder="宿舍">
                 </div>
                 <div class="form-group">
-                  <input id="clas" name="clas" type="text" class="form-control "  placeholder="班级">
+                  <input style="color : black" id="clas" name="clas" type="text" class="form-control "  placeholder="班级">
                 </div>
                 <div class="form-group">
-                  <input id="number" name="number" type="text" class="form-control "  placeholder="学号">
+                  <input style="color : black" id="number" name="number" type="text" class="form-control "  placeholder="学号">
                 </div>
                 <div class="form-group">
-                  <input  id="teacher_phone" name="teacher_phone" type="text" class="form-control "  placeholder="导师电话">
+                  <input style="color : black"  id="teacher_phone" name="teacher_phone" type="text" class="form-control "  placeholder="导师电话">
                 </div>
                 <div class="form-group">
-                  <input  id="parent_phone" name="parent_phone" type="text" class="form-control "  placeholder="家长电话">
+                  <input  style="color : black" id="parent_phone" name="parent_phone" type="text" class="form-control "  placeholder="家长电话">
                 </div>
 
                 <input  id="submit" type="button"  value="添加" class="btn btn-success  btn-block">
@@ -60,22 +60,22 @@
             <div class="col-lg-5 p-5 card m-4 border-left-info" >
               <form  class="user">
                 <div class="form-group">
-                  <input id="name1" name="name" type="text" class="form-control "  placeholder="姓名">
+                  <input style="color : black" id="name1" name="name" type="text" class="form-control "  placeholder="姓名">
                 </div>
                 <div class="form-group">
-                  <input id="dormitory1"  name="dormitory" type="text" class="form-control "  placeholder="宿舍">
+                  <input style="color : black"  id="dormitory1"  name="dormitory" type="text" class="form-control "  placeholder="宿舍">
                 </div>
                 <div class="form-group">
-                  <input id="clas1" name="clas" type="text" class="form-control "  placeholder="班级">
+                  <input  style="color : black" id="clas1" name="clas" type="text" class="form-control "  placeholder="班级">
                 </div>
                 <div class="form-group">
-                  <input id="number1" name="number" type="text" class="form-control "  placeholder="学号">
+                  <input  style="color : black" id="number1" name="number" type="text" class="form-control "  placeholder="学号">
                 </div>
                 <div class="form-group">
-                  <input  id="teacher_phone1" name="teacher_phone" type="text" class="form-control "  placeholder="导师电话">
+                  <input  style="color : black" id="teacher_phone1" name="teacher_phone" type="text" class="form-control "  placeholder="导师电话">
                 </div>
                 <div class="form-group">
-                  <input  id="parent_phone1" name="parent_phone" type="text" class="form-control "  placeholder="家长电话">
+                  <input  style="color : black" id="parent_phone1" name="parent_phone" type="text" class="form-control "  placeholder="家长电话">
                 </div>
 
                 <input  id="update" type="button"  value="更新" class="btn btn-warning  btn-block">
@@ -139,7 +139,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="/login">Logout</a>
         </div>
       </div>
     </div>
@@ -148,7 +148,29 @@
   <div th:replace="common :: #script"/>
   <script  th:inline="javascript">
 
+
  $(document).ready(function(){
+  $('#number1').bind('input propertychange change', function () {
+        var number1=$("#number1").val();
+       var params={
+           number : number1,
+
+        };
+         $.post({
+        url : "./user/getUserByNumber",
+        contentType : "application/json",
+        data : JSON.stringify(params),
+        success : function(result){
+              console.log(result);
+               $("#name1").val(result.name);
+               $("#dormitory1").val(result.dormitory);
+               $("#clas1").val(result.clas);
+               $("#teacher_phone1").val(result.teacher_phone);
+               $("#parent_phone1").val(result.parent_phone);
+              }
+         });
+    });
+
   $("#submit").click(function(){
         var name=$("#name").val();
         var dormitory=$("#dormitory").val();
@@ -180,8 +202,6 @@
                  if(result==-1){
                   alert("插入失败");
                  }else if(result==-2){
-                    alert("姓名重复");
-                 }else if(result==-3){
                     alert("学号重复");
                  }else{
                  alert("插入成功");
@@ -201,8 +221,8 @@
         var teacher_phone1=$("#teacher_phone1").val();
         var parent_phone1=$("#parent_phone1").val();
 
-        if($.trim(name1)==''){
-           alert("用户名不能为空");
+        if($.trim(number1)==''){
+           alert("学号不能为空");
            self.location.reload();
            return;
         }
@@ -227,10 +247,7 @@
                  }else if(result==-2){
                   alert("查无学生");
 
-                 }else if(result==-3){
-                   alert("学号已经被注册");
-                 }
-                 else{
+                 }else{
                    alert("更新成功");
 
                  }

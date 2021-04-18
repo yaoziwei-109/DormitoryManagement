@@ -1,19 +1,11 @@
 package com.example.demo.Controller;
 
 import com.example.demo.bean.Student;
-import com.example.demo.service.studentservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 @Controller
 public class manageController {
@@ -49,7 +41,7 @@ public class manageController {
 
     }
 
-    @PostMapping("/user/getUsernameByNumber")
+    @PostMapping ("/user/getUsernameByNumber")
     @ResponseBody
     public String getUsernameByNumber(@RequestBody Student student,
                       HttpSession session)
@@ -61,6 +53,13 @@ public class manageController {
             return  null;
 
     }
-
+    @PostMapping("/user/getUserByNumber")
+    @ResponseBody
+    public Student getUserByNumber(@RequestBody Student student, HttpSession session){
+        System.out.println(student.getNumber());
+        Student o=studentservice.getStudentbynumber((String) session.getAttribute("username"),student.getNumber());
+        System.out.println(o);
+        return   o;
+    }
 
 }

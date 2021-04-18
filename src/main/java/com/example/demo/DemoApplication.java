@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @MapperScan("com.example.demo.mapper")
 @SpringBootApplication
-@ComponentScan()
 @Slf4j
 public class DemoApplication {
 

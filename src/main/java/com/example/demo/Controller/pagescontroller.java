@@ -34,8 +34,11 @@ public class pagescontroller {
 
     @RequestMapping(value={"/main"})
     public  String main(Model model,HttpSession session){
-        model.addAttribute("username",session.getAttribute("username"));
-        model.addAttribute("countall",studentservice.countall((String)session.getAttribute("username")));
+        String username= (String) session.getAttribute("username");
+        model.addAttribute("username",username);
+        model.addAttribute("countall",studentservice.countall(username));
+        model.addAttribute("countallclass",studentservice.countallclass(username));
+        model.addAttribute("countAllDormitory",studentservice.countAllDormitory(username));
         return "index";
     }
 }
