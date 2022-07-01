@@ -34,7 +34,7 @@ public class LoginController {
             return "redirect:/main";
         }
         else {
-            session.setAttribute("msg","账号或密码错误");
+            session.setAttribute("msg","账号");
             return "redirect:/login";
         }
     }
