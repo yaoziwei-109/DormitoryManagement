@@ -78,6 +78,8 @@ public class LoginController {
         String path = ResourceUtils.getURL("classpath:").getPath() + "/";
         String originSaveName = "我是保存文件_原文件.txt222www";
         String encryptSaveName = "我是保存文件_加密文件.txt";
+        String originSave22Name = "我是保存文件_原文件.txt";
+        String encryptSaveN22ame = "我是保存文件_加密文件.txt";
         return  true;
     }
 }
