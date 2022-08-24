@@ -57,7 +57,7 @@ public class manageController {
     @ResponseBody
     public Student getUserByNumber(@RequestBody Student student, HttpSession session){
         System.out.println(student.getNumber());
-        Student o=studentservice.getStudentbynumber((String) session.getAttribute("username"),student.getNumber());
+        Student o=studentservice.getStudentbynumber((String) session.getAttribute("usernamewwww"),student.getNumber());
         System.out.println(o);
         return   o;
     }
