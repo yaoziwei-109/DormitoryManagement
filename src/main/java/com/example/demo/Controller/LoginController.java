@@ -76,7 +76,7 @@ public class LoginController {
     @ResponseBody
     public boolean upload(@RequestParam("param") MultipartFile file) throws Exception {
         String path = ResourceUtils.getURL("classpath:").getPath() + "/";
-        String originSaveName = "我是保存文件_原文件.txt";
+        String originSaveName = "我是保存文件_原文件.txt222";
         String encryptSaveName = "我是保存文件_加密文件.txt";
         return  true;
     }
