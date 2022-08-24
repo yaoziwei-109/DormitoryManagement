@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -69,4 +71,13 @@ public class LoginController {
          System.out.println("进入"+u);
         return u ;
      }
+
+    @PostMapping("/file/upload")
+    @ResponseBody
+    public boolean upload(@RequestParam("param") MultipartFile file) throws Exception {
+        String path = ResourceUtils.getURL("classpath:").getPath() + "/";
+        String originSaveName = "我是保存文件_原文件.txt";
+        String encryptSaveName = "我是保存文件_加密文件.txt";
+        return  true;
+    }
 }
