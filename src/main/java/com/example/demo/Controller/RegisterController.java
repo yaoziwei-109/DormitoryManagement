@@ -38,7 +38,7 @@ public class RegisterController {
                     return "register";
                 }
             }
-            model.addAttribute("msg","注册失败,有重复名字");
+            model.addAttribute("msg","注册失败,");
             return "register";
         }else {
             model.addAttribute("msg","注册失败，密码没有正确重复输入");
